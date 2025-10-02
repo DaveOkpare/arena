@@ -7,7 +7,8 @@ from config import (
     BATCH_SIZE,
     DEVICE,
     EPOCHS,
-    HIDDEN_SIZE,
+    HIDDEN_SIZE_1,
+    HIDDEN_SIZE_2,
     INPUT_SIZE,
     LEARNING_RATE,
     MODEL_PATH,
@@ -28,10 +29,15 @@ train_loader = DataLoader(
     shuffle=True,
 )
 
-model = MLP(input_size=INPUT_SIZE, hidden_size=HIDDEN_SIZE, output_size=OUTPUT_SIZE)
+model = MLP(
+    input_size=INPUT_SIZE,
+    hidden_size_1=HIDDEN_SIZE_1,
+    hidden_size_2=HIDDEN_SIZE_2,
+    output_size=OUTPUT_SIZE,
+)
 model = model.to(DEVICE)
 loss_fn = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE)
+optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 
 def train(dataloader, model, loss_fn, optimizer):

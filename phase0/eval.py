@@ -33,9 +33,9 @@ def eval(dataloader, model, loss_fn):
 
 if __name__ == "__main__":
     from model import MLP
-    from config import INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE
+    from config import INPUT_SIZE, HIDDEN_SIZE_1, HIDDEN_SIZE_2, OUTPUT_SIZE
 
-    _model = MLP(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE)
+    _model = MLP(INPUT_SIZE, HIDDEN_SIZE_1, HIDDEN_SIZE_2, OUTPUT_SIZE)
     _model.load_state_dict(torch.load(MODEL_PATH))
     _model.to(DEVICE)
 
