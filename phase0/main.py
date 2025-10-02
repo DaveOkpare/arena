@@ -3,26 +3,35 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor
-from config import BATCH_SIZE, DEVICE, MODEL_PATH, SEED
+from config import (
+    BATCH_SIZE,
+    DEVICE,
+    EPOCHS,
+    HIDDEN_SIZE,
+    INPUT_SIZE,
+    LEARNING_RATE,
+    MODEL_PATH,
+    OUTPUT_SIZE,
+    SEED,
+)
 from model import MLP
 from utils import set_seed
-
-
-input_size = 28 * 28
-hidden_size = 512
-output_size = 10
 
 set_seed(SEED)
 
 train_dataset = datasets.mnist.MNIST(
     root="data", download=True, train=True, transform=ToTensor()
 )
-train_loader = DataLoader(train_dataset, batch_size=BATCH_SIZE)
+train_loader = DataLoader(
+    train_dataset,
+    batch_size=BATCH_SIZE,
+    shuffle=True,
+)
 
-model = MLP(input_size=input_size, hidden_size=hidden_size, output_size=output_size)
+model = MLP(input_size=INPUT_SIZE, hidden_size=HIDDEN_SIZE, output_size=OUTPUT_SIZE)
 model = model.to(DEVICE)
 loss_fn = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=1e-3)
+optimizer = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE)
 
 
 def train(dataloader, model, loss_fn, optimizer):
@@ -46,8 +55,7 @@ def train(dataloader, model, loss_fn, optimizer):
 if __name__ == "__main__":
     import os
 
-    epochs = 5
-    for t in range(epochs):
+    for t in range(EPOCHS):
         print(f"Epoch {t + 1}\n-------------------------------")
         train(train_loader, model, loss_fn, optimizer)
     os.makedirs("checkpoints", exist_ok=True)

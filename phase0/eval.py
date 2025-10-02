@@ -32,11 +32,12 @@ def eval(dataloader, model, loss_fn):
 
 
 if __name__ == "__main__":
-    from main import MLP, input_size, hidden_size, output_size
+    from model import MLP
+    from config import INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE
 
-    model = MLP(input_size, hidden_size, output_size)
-    model.load_state_dict(torch.load(MODEL_PATH))
-    model.to(DEVICE)
+    _model = MLP(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE)
+    _model.load_state_dict(torch.load(MODEL_PATH))
+    _model.to(DEVICE)
 
     loss_fn = torch.nn.CrossEntropyLoss()
-    eval(test_loader, model, loss_fn)
+    eval(test_loader, _model, loss_fn)
