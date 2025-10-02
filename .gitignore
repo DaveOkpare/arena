@@ -217,8 +217,8 @@ __marimo__/
 .streamlit/secrets.toml
 
 # Deep Learning
-checkpoints/
-data/
+**/checkpoints/
+**/data/
 *.pth
 *.pt
 *.ckpt
